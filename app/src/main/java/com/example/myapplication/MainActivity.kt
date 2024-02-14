@@ -1,22 +1,117 @@
 package com.example.myapplication
+import android.annotation.SuppressLint
 import androidx.activity.compose.setContent
-import com.example.myapplication.HomeScreen
 import com.example.model.VideoCategory
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.Icon
 
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            val categories = listOf(
-                VideoCategory("Actions", listOf("Video 1", "Video 2")),
-                VideoCategory("Comédies", listOf("Video 3", "Video 4"))
-            )
-            HomeScreen(categories = categories)
+            MainScreen()
         }
     }
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController) }
+    ) {
+        AppNavGraph(navController = navController)
+    }
+}
+
+
+@Composable
+fun Connection(navController: NavController) {
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text(text = "Welcome", color = Color.Black, style = MaterialTheme.typography.headlineLarge)
+        Spacer(modifier = Modifier.height(64.dp))
+        Button(onClick = { navController.navigate("homeScreen") }) {
+            Text("Connexion")
+        }
+    }
+}
+
+
+sealed class Screen(val route: String, val icon: ImageVector, val title: String) {
+    object Home : Screen("homeScreen", Icons.Filled.Home, "Accueil")
+    object Connection : Screen("connection", Icons.Filled.Home, "Connexion")
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
+    val items = listOf(
+        Screen.Home,
+        Screen.Connection
+    )
+    NavigationBar {
+        val currentRoute = navController.currentDestination?.route
+        items.forEach { screen ->
+            NavigationBarItem(
+                icon = { Icon(screen.icon, contentDescription = null) },
+                label = { Text(screen.title) },
+                selected = currentRoute == screen.route,
+                onClick = {
+                    navController.navigate(screen.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) { saveState = true }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
+        }
+    }
+}
+
+
+
+
+
+
