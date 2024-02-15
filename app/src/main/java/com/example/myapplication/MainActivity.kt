@@ -69,24 +69,26 @@ fun Connection(navController: NavController) {
     ){
         Text(text = "Welcome", color = Color.Black, style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(64.dp))
-        Button(onClick = { navController.navigate("homeScreen") }) {
+        Button(onClick = { navController.navigate("movieDisplay") }) {
             Text("Connection")
         }
     }
 }
 
 
+// Nav bar
 sealed class Screen(val route: String, val icon: ImageVector, val title: String) {
     object Connection : Screen("connection", Icons.Filled.Home, "Connection")
-    object Home : Screen("homeScreen", Icons.Filled.Home, "Movies")
-
+    object MovieDisplay : Screen("movieDisplay", Icons.Filled.Home, "Movies")
+    object Favoris : Screen("favoris", Icons.Filled.Home, "Favoris")
 }
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
-        Screen.Home,
-        Screen.Connection
+        Screen.MovieDisplay,
+        Screen.Connection,
+        Screen.Favoris
     )
     NavigationBar {
         val currentRoute = navController.currentDestination?.route

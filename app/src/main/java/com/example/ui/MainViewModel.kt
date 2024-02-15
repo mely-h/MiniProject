@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.model.Movie
+import com.example.model.Single
+import com.example.model.SingleResponse
 import com.example.network.MovieApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +38,35 @@ class MoviesViewModel : ViewModel() {
             } catch (e: Exception) {
                 // Gestion des exceptions, par exemple en affichant un message d'erreur ou en mettant à jour un état d'erreur dans le ViewModel
                 _popularMovies.postValue(emptyList())
+            }
+        }
+    }
+}
+
+class DetailsViewModel : ViewModel() {
+    private val movieApi: MovieApi by lazy {
+        Retrofit.Builder()
+            .baseUrl(MovieApi.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MovieApi::class.java)
+    }
+
+
+    private val _movieDetails = MutableLiveData<SingleResponse>()
+    val movieDetails: LiveData<SingleResponse> = _movieDetails
+
+
+    fun loadMovieDetails(movieId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = movieApi.getMovie(movieId, "c6f38076699aa54f96b9750db2bcdf8d")
+                if (response.isSuccessful && response.body() != null) {
+                    _movieDetails.postValue(response.body()!!)
+
+                }
+            } catch (e: Exception) {
+
             }
         }
     }
