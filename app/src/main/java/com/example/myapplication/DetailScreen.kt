@@ -1,13 +1,11 @@
 package com.example.myapplication
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.model.Single
 import com.example.ui.DetailsViewModel
 
 
@@ -23,7 +21,7 @@ fun MovieDetailScreen( movieId: String, viewModel: DetailsViewModel = viewModel(
     movieDetails?.let { single ->
         Text(text = single.title)
 
-    } ?: Text("Chargement des détails du film...")
+    } ?: Text("Chargement des détails...")
 
 }
 

@@ -10,8 +10,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,8 +31,6 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Icon
-import com.example.model.Movie
 
 
 class MainActivity : ComponentActivity() {
@@ -78,17 +77,17 @@ fun Connection(navController: NavController) {
 
 // Nav bar
 sealed class Screen(val route: String, val icon: ImageVector, val title: String) {
-    object Connection : Screen("connection", Icons.Filled.Home, "Connection")
+    object Connection : Screen("connection", Icons.Filled.AccountBox, "Connection")
     object MovieDisplay : Screen("movieDisplay", Icons.Filled.Home, "Movies")
-    object Favoris : Screen("favoris", Icons.Filled.Home, "Favoris")
+    object Favorite : Screen("favoris", Icons.Filled.Favorite, "Favorite")
 }
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
-        Screen.MovieDisplay,
         Screen.Connection,
-        Screen.Favoris
+        Screen.MovieDisplay,
+        Screen.Favorite
     )
     NavigationBar {
         val currentRoute = navController.currentDestination?.route
