@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class MoviesViewModel : ViewModel() {
     private val MoviesApi: MovieApi by lazy {
         Retrofit.Builder()
@@ -41,6 +42,7 @@ class MoviesViewModel : ViewModel() {
 }
 
 
+
 class DetailsViewModel : ViewModel() {
     private val movieApi: MovieApi by lazy {
         Retrofit.Builder()
@@ -60,7 +62,6 @@ class DetailsViewModel : ViewModel() {
                 val response = movieApi.getMovie(movieId, "c6f38076699aa54f96b9750db2bcdf8d")
                 if (response.isSuccessful && response.body() != null) {
                     _movieDetails.postValue(response.body()!!)
-
                 }
             } catch (e: Exception) {
 

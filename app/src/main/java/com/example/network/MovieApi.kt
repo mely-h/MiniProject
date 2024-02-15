@@ -15,7 +15,6 @@ interface MovieApi {
     @GET("movie/{id}")
     suspend fun getMovie(@Path("id") movieId: String, @Query("api_key") apiKey: String): Response<SingleResponse>
 
-
     companion object {
         const val BASE_URL = "https://api.themoviedb.org/3/"
     }
