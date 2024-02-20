@@ -41,6 +41,7 @@ android {
 
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2023.01.00")
+
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
@@ -62,4 +63,15 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation ("androidx.compose.runtime:runtime:1.3.3")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.3.3")
+    implementation ("androidx.compose.runtime:runtime-rxjava2:1.3.3")
+    implementation ("io.coil-kt:coil-compose:1.4.0")
 }
