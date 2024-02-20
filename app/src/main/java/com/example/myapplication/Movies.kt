@@ -58,6 +58,8 @@ import com.example.ui.MoviesViewModel
 
 @Composable
 fun MoviesDisplay(navController: NavController) {
+
+
     val movieViewModel: MoviesViewModel = viewModel()
     // Observer les films populaires depuis le ViewModel
     val movies = movieViewModel.popularMovies.observeAsState(initial = emptyList()).value
@@ -106,3 +108,4 @@ fun MovieItem(movie: Movie  ,  onClick: () -> Unit ) {
         }
     }
 }
+
