@@ -17,5 +17,3 @@ fun AppNavGraph(navController: NavHostController) {
         }
     }
 }
-
-

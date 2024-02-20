@@ -10,7 +10,7 @@ import retrofit2.http.Path
 interface MovieApi {
 
     @GET("discover/movie")
-   suspend fun getAllMovies(@Query("api_key") apiKey: String): Response<MovieResponse>
+    suspend fun getAllMovies(@Query("api_key") apiKey: String): Response<MovieResponse>
 
     @GET("movie/{id}")
     suspend fun getMovie(@Path("id") movieId: String, @Query("api_key") apiKey: String): Response<SingleResponse>
@@ -19,4 +19,3 @@ interface MovieApi {
         const val BASE_URL = "https://api.themoviedb.org/3/"
     }
 }
-

@@ -40,8 +40,6 @@ import com.example.ui.MoviesViewModel
 
 @Composable
 fun MoviesDisplay(navController: NavController) {
-
-
     val movieViewModel: MoviesViewModel = viewModel()
     val movies = movieViewModel.allMovies.observeAsState(initial = emptyList()).value
     LaunchedEffect(key1 = true) {
@@ -105,4 +103,3 @@ fun MovieItem(movie: Movie  ,  onClick: () -> Unit ) {
         }
     }
 }
-

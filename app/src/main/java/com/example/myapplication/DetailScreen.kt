@@ -95,10 +95,6 @@ fun MovieDetailScreen( movieId: String, viewModel: DetailsViewModel = viewModel(
         }
 
 
-} ?: Text("Chargement des détails...")
+    } ?: Text("Chargement des dÃ©tails...")
 
 }
-
-
-
-
