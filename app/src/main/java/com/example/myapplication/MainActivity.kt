@@ -31,6 +31,9 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 
 class MainActivity : ComponentActivity() {
@@ -49,16 +52,22 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val showBottomBar = remember { mutableStateOf(false) }
+
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController) }
+        bottomBar = {
+            if (showBottomBar.value) {
+                BottomNavigationBar(navController)
+            }
+        }
     ) {
-        AppNavGraph(navController = navController)
+        AppNavGraph(navController = navController, showBottomBar = showBottomBar)
     }
 }
 
 
 @Composable
-fun Connection(navController: NavController) {
+fun Connection(navController: NavController, showBottomBar: MutableState<Boolean>) {
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -68,11 +77,16 @@ fun Connection(navController: NavController) {
     ){
         Text(text = "Welcome", color = Color.Black, style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(64.dp))
-        Button(onClick = { navController.navigate("movieDisplay") }) {
+        Button(onClick = {
+            navController.navigate("movieDisplay")
+            showBottomBar.value = true
+        }) {
             Text("Connection")
         }
     }
 }
+
+
 
 
 // Nav bar
@@ -85,7 +99,6 @@ sealed class Screen(val route: String, val icon: ImageVector, val title: String)
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
-        Screen.Connection,
         Screen.MovieDisplay,
         Screen.Favorite
     )
@@ -109,6 +122,8 @@ fun BottomNavigationBar(navController: NavHostController) {
         }
     }
 }
+
+
 
 
 

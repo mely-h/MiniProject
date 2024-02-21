@@ -60,6 +60,7 @@ class DetailsViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = movieApi.getMovie(movieId, "c6f38076699aa54f96b9750db2bcdf8d")
+
                 if (response.isSuccessful && response.body() != null) {
                     _movieDetails.postValue(response.body()!!)
                 }
