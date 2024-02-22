@@ -1,13 +1,17 @@
-# MiniProject 
+# MiniProjectMovie
 
+## Project Description
 
--Le nom du projet : MiniProject_Movie
+MiniProjectMovie is an Android application specifically designed for movie enthusiasts. This app provides an exhaustive library of movies allowing the user users to browse through movies and access descriptions about each film. Currently, the application does not support the functionality to save movies as favorites.
 
+## Features
 
--Le nom des membres (binôme) : Enas El Mershati / Melissa Hnaouti 
+- **Movie Library:** Access a vast collection of movies.
+- **Detailed Descriptions:** Get the descriptions of each movie.
+- **Interactive User Interface:** Navigate through the app easily with a navbar
 
+## Technologies Used
 
--Le sujet du projet : Développer une application android de biblio pour les films .
-
-
--Une description du projet : MiniProject_Movie est une application Android Dédiée aux amateurs de films, offrant une bibliothèque exhaustive de films accompagnée d'une interface interactive. Cette application permet aux utilisateurs de parcourir une multitude de films, puis de plonger dans chaque univers cinématographique en accédant aux descriptions détaillées et aux informations .
+- Android Studio
+- Programming Language: Kotlin/Java
+- Movie Information API: [The Movie Database (TMDb)](https://www.themoviedb.org/)
