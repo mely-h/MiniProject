@@ -1,4 +1,5 @@
 # MiniProjectMovie
+#### Members name: Enas El Mershati / Melissa Hnaouti
 
 ## Project Description
 
