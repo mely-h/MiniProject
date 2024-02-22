@@ -1,7 +1,6 @@
 package com.example.myapplication
 import android.annotation.SuppressLint
 import androidx.activity.compose.setContent
-import com.example.model.VideoCategory
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,16 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavHostController
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Icon
-
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 
 class MainActivity : ComponentActivity() {
@@ -52,16 +52,22 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val showBottomBar = remember { mutableStateOf(false) }
+
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController) }
+        bottomBar = {
+            if (showBottomBar.value) {
+                BottomNavigationBar(navController)
+            }
+        }
     ) {
-        AppNavGraph(navController = navController)
+        AppNavGraph(navController = navController, showBottomBar = showBottomBar)
     }
 }
 
 
 @Composable
-fun Connection(navController: NavController) {
+fun Connection(navController: NavController, showBottomBar: MutableState<Boolean>) {
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -71,23 +77,30 @@ fun Connection(navController: NavController) {
     ){
         Text(text = "Welcome", color = Color.Black, style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(64.dp))
-        Button(onClick = { navController.navigate("homeScreen") }) {
-            Text("Connexion")
+        Button(onClick = {
+            navController.navigate("movieDisplay")
+            showBottomBar.value = true
+        }) {
+            Text("Connection")
         }
     }
 }
 
 
+
+
+// Nav bar
 sealed class Screen(val route: String, val icon: ImageVector, val title: String) {
-    object Home : Screen("homeScreen", Icons.Filled.Home, "Accueil")
-    object Connection : Screen("connection", Icons.Filled.Home, "Connexion")
+    object Connection : Screen("connection", Icons.Filled.AccountBox, "Connection")
+    object MovieDisplay : Screen("movieDisplay", Icons.Filled.Home, "Movies")
+    object Favorite : Screen("favoris", Icons.Filled.Favorite, "Favorite")
 }
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
-        Screen.Home,
-        Screen.Connection
+        Screen.MovieDisplay,
+        Screen.Favorite
     )
     NavigationBar {
         val currentRoute = navController.currentDestination?.route
@@ -109,7 +122,6 @@ fun BottomNavigationBar(navController: NavHostController) {
         }
     }
 }
-
 
 
 
